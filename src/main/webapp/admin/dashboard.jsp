@@ -4,10 +4,10 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Client - Dashboard</title>
+<title>Admin - Dashboard</title>
 </head>
 <body>
-	<h1>Welcome Client...</h1>
-	<a href="${pageContext.request.contextPath}/logout">Logout</a>
+	<h1>Welcome Admin...</h1>
+	<a href="${pageContext.request.contextPath}/LogoutServlet">Logout</a>
 </body>
 </html>

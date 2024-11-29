@@ -16,7 +16,7 @@ import dao.DAOFactory;
 
 
 
-
+@WebServlet("/LoginServlet")
 public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private DAOAuth  authDao;
@@ -43,25 +43,28 @@ public class LoginServlet extends HttpServlet {
 
 protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-	String username = request.getParameter("username");
+	String email = request.getParameter("email");
     String password = request.getParameter("password");
 
    
-    User user = authDao.authenticate(username, password);
+    User user = authDao.authenticate(email, password);
 
     if (user != null) {
         HttpSession session = request.getSession();
-        session.setAttribute("username", user.getUsername());
+        session.setAttribute("email", user.getEmail());
         session.setAttribute("typeUser", user.getTypeUser());
 
         // Rediriger en fonction du type d'utilisateur
         switch (user.getTypeUser()) {
             case "client":
-                response.sendRedirect("Client/dashboard.jsp");
+                response.sendRedirect("ClientJSP/dashboard-client.jsp");
                 break;
             
             case "admin":
-                response.sendRedirect("Admin/dashboard.jsp");
+                response.sendRedirect("admin/admin.jsp");
+                break;
+            case "technicien":
+                response.sendRedirect("TechnicientJSP/technicient.jsp");
                 break;
         }
     } else {
