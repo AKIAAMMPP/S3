@@ -51,11 +51,11 @@ public class ClientDaoImpI implements ClientDAO {
     public List<Client> getAllClients() {
         List<Client> clients = new ArrayList<>();
         String sql = "SELECT * FROM clients"; // Assurez-vous que "clients" est bien le nom de la table
-
+        System.out.println("f");
         try (Connection connexion = daoFactory.getConnection();
              PreparedStatement preparedStatement = connexion.prepareStatement(sql);
              ResultSet resultSet = preparedStatement.executeQuery()) {
-
+        	System.out.println("g");
             while (resultSet.next()) {
                 int id = resultSet.getInt("id");
                 String nom = resultSet.getString("nom");

@@ -1,6 +1,5 @@
 package dao.daoTechnicien;
 
-package dao.daoTechnicien;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -25,14 +24,17 @@ public class TechnicienDaoImpI implements TechnicienDAO {
         PreparedStatement preparedStatement = null;
         try {
             connexion = daoFactory.getConnection();
-            String sql = "INSERT INTO techniciens(nom, prenom, experc, salaire) VALUES(?, ?, ?, ?)";
+            // La requête SQL avec les bons paramètres
+            String sql = "INSERT INTO techniciens(nom, prenom, experience, specialite, email, password) VALUES(?, ?, ?, ?, ?, ?)";
             preparedStatement = connexion.prepareStatement(sql);
-            preparedStatement.setString(1, t.getNom());
-            preparedStatement.setString(2, t.getPrenom());
-            preparedStatement.setString(3, t.getExperience());
-            preparedStatement.setString(3, t.getSpecialite());
-            preparedStatement.setString(3, t.getEmail());
-            preparedStatement.setString(4, t.getPassword());
+
+            // Assurez-vous que vous utilisez les bons indices pour les paramètres
+            preparedStatement.setString(1, t.getNom());           // nom
+            preparedStatement.setString(2, t.getPrenom());        // prenom
+            preparedStatement.setString(3, t.getExperience());    // experience
+            preparedStatement.setString(4, t.getSpecialite());    // specialite
+            preparedStatement.setString(5, t.getEmail());         // email
+            preparedStatement.setString(6, t.getPassword());      // password
 
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
@@ -69,7 +71,7 @@ public class TechnicienDaoImpI implements TechnicienDAO {
                 String email = resultSet.getString("email");
                 String password = resultSet.getString("password");
 
-                techniciens.add(new Technicien( nom, prenom, specialite, experience, email, password));
+                techniciens.add(new Technicien(id, nom, prenom, specialite, experience, email, password));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -153,13 +155,13 @@ public class TechnicienDaoImpI implements TechnicienDAO {
 
             if (resultSet.next()) {
                 technicien = new Technicien(
-                        resultSet.getInt("id"),
+                		resultSet.getInt("id"),
                         resultSet.getString("nom"),
                         resultSet.getString("prenom"),
                         resultSet.getString("experience"),
                         resultSet.getString("specialite"),
                         resultSet.getString("email"),
-                        resultSet.getDouble("password")
+                        resultSet.getString("password")
                 );
             }
         } catch (SQLException e) {

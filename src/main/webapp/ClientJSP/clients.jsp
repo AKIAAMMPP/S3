@@ -1,36 +1,64 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>liste des clients</title>
+    <title>Liste des Clients</title>
 </head>
 <body>
-    <h1>Clients :</h1>
+    <h1>Liste des Clients</h1>
 
-<!-- Affichage de la liste des clients -->
-<c:forEach var="client" items="${clients}">
-    <!-- Affichage des informations sur chaque client -->
-    <p>
-        <strong>ID :</strong> <c:out value="${client.id}" /><br>
-        <strong>Nom :</strong> <c:out value="${client.nom}" /><br>
-        <strong>Prénom :</strong> <c:out value="${client.prenom}" /><br>
-        <strong>Email :</strong> <c:out value="${client.email}" /><br>
-        <strong>Adresse :</strong> <c:out value="${client.adresse}" /><br>
-        <strong>Téléphone :</strong> <c:out value="${client.telephone}" /><br>
+    <!-- Bouton Ajouter un Client -->
+    <form action="ClientServlet" method="get" style="display:inline;">
+        <input type="hidden" name="action" value="ajouter">
+        <button type="submit">Ajouter un Client</button>
+    </form>
 
-        <!-- Bouton pour modifier le client -->
-        <a href="ClientServlet?action=modifier&id=${client.id}" class="button">Modifier</a>
+    <!-- Vérifiez si la liste des clients est vide -->
+    <c:choose>
+        <c:when test="${empty clients}">
+            <p>Aucun client disponible pour le moment.</p>
+        </c:when>
+        <c:otherwise>
+            <!-- Création du tableau -->
+            <table border="1">
+                <thead>
+                    <tr>
+                        <th>Nom</th>
+                        <th>Prénom</th>
+                        <th>Email</th>
+                        <th>Adresse</th>
+                        <th>Téléphone</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Parcours de la liste des clients -->
+                    <c:forEach var="client" items="${clients}">
+                        <tr>
+                            <td>${client.nom}</td>
+                            <td>${client.prenom}</td>
+                            <td>${client.email}</td>
+                            <td>${client.adresse}</td>
+                            <td>${client.telephone}</td>
+                            <td>
+                                <!-- Bouton Modifier -->
+                                <form action="modifierClient" method="post" style="display:inline;">
+                                    <input type="hidden" name="id" value="${client.id}" />
+                                    <button type="submit">Modifier</button>
+                                </form>
 
-        <!-- Bouton pour supprimer le client -->
-        <a href="ClientServlet?action=supprimer&id=${client.id}" class="button" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce client ?');">Supprimer</a>
-    </p>
-</c:forEach>
-
-<!-- Lien vers la page d'ajout d'un client -->
-<a href="ClientServlet?action=ajouter" class="button">Ajouter un Client</a>
-
-
+                                <!-- Bouton Supprimer -->
+                                <form action="supprimerClient" method="post" style="display:inline;">
+                                    <input type="hidden" name="id" value="${client.id}" />
+                                    <button type="submit">Supprimer</button>
+                                </form>
+                            </td>
+                        </tr>
+                    </c:forEach>
+                </tbody>
+            </table>
+        </c:otherwise>
+    </c:choose>
 </body>
 </html>

@@ -53,10 +53,11 @@ import jakarta.servlet.http.HttpServletResponse;
 	    protected void list_Client(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	        List<Client> clients = clientDAO.getAllClients(); // Récupérer la liste des clients
 	        request.setAttribute("clients", clients); // Ajouter la liste des clients à la requête
-	        request.getRequestDispatcher("/ClientJSP/ajout_client.jsp").forward(request, response); // Rediriger vers la JSP des clients
+	        request.getRequestDispatcher("/ClientJSP/clients.jsp").forward(request, response);
+	        System.out.println("hhhh");
 	    }
 	    private void showNewForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	        request.getRequestDispatcher("/ClientJSP/ajout_client.jsp").forward(request, response);
+	        request.getRequestDispatcher("/ClientJSP/ClientAdd.jsp").forward(request, response);
 	    }
 	    protected void showEditForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	        int id = Integer.parseInt(request.getParameter("id"));

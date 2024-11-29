@@ -19,8 +19,8 @@ public class Technicien {
     // Constructeur vide
     
     // Constructeur avec paramètres
-    public Technicien(String nom, String prenom, String specialite,   String experience, String password, String email) {
-        
+    public Technicien(int id, String nom, String prenom, String specialite,   String experience, String password, String email) {
+        this.id = id;
         this.nom = nom;
         this.prenom = prenom;
         this.experience = experience;

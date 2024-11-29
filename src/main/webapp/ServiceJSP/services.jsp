@@ -7,9 +7,11 @@
 </head>
 <body>
     <h1>Liste des Services</h1>
-    <form action="ServiceServlet" method="post" style="display:inline;">
-             <button type="submit">Modifier</button>
-    </form>
+    <form action="ServiceServlet" method="get" style="display:inline;">
+	    <input type="hidden" name="action" value="ajouter">
+	    <button type="submit">Ajouter</button>
+	</form>
+
 
     <!-- Vérifiez si la liste des services est vide -->
     <c:choose>

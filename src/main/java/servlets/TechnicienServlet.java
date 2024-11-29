@@ -1,4 +1,5 @@
 package servlets;
+
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -7,9 +8,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-import beans.Service;
+import beans.Technicien;
 import dao.DAOFactory;
-import dao.daoService.ServiceDAO;
 import dao.daoTechnicien.TechnicienDAO;
 
 /**
@@ -35,7 +35,7 @@ public class TechnicienServlet extends HttpServlet {
 
         try {
             if (action == null) {
-                list_Service(request, response);
+            	list_Technicient(request, response);
             } else {
                 switch (action) {
                     case "ajouter":
@@ -58,26 +58,16 @@ public class TechnicienServlet extends HttpServlet {
         }
     }
     
-    private void list_Service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    private void list_Technicient(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            // Récupération des services depuis la base de données via le DAO
-            List<Service> technicients = technicienDao.getAllTechnicients();
-            
-            // Vérification dans les logs pour le débogage
-            System.out.println("Technicient récupérés : " + technicients);
-            
-            // Ajout de la liste des services dans les attributs de la requête
+        	List<Technicien> technicients = technicienDao.getAllTechniciens();
             request.setAttribute("technicients", technicients);
-            
-            // Redirection vers la page JSP
             request.getRequestDispatcher("/TechnicientJSP/technicients.jsp").forward(request, response);
         } catch (Exception e) {
-            // Gestion des erreurs : log et retour d'une erreur HTTP 500
             e.printStackTrace();
-            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Erreur lors de la récupération des services.");
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Erreur lors de la récupération des techniciens.");
         }
     }
-
 
     private void showNewForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.getRequestDispatcher("/TechnicientJSP/technicientAdd.jsp").forward(request, response);
@@ -87,23 +77,20 @@ public class TechnicienServlet extends HttpServlet {
         try {
             String idParam = request.getParameter("id");
             if (idParam == null || idParam.isEmpty()) {
-                response.sendError(HttpServletResponse.SC_BAD_REQUEST, "ID du Technicient manquant.");
+                response.sendError(HttpServletResponse.SC_BAD_REQUEST, "ID du technicien manquant.");
                 return;
             }
-
             int id = Integer.parseInt(idParam);
-            Service service = technicienDao.getTechnicientById(id);
-
-            if (service == null) {
-                response.sendError(HttpServletResponse.SC_NOT_FOUND, "Technicient non trouvé.");
+            Technicien technicien = technicienDao.getTechnicienById(id);
+            if (technicien == null) {
+                response.sendError(HttpServletResponse.SC_NOT_FOUND, "Technicien non trouvé.");
                 return;
             }
-
-            request.setAttribute("technicient", service);
-            request.getRequestDispatcher("/TechnicientJSP/technicientUpdate.jsp").forward(request, response);
+            request.setAttribute("technicien", technicien);
+            request.getRequestDispatcher("/TechnicientJSP/technicienUpdate.jsp").forward(request, response);
         } catch (NumberFormatException e) {
             e.printStackTrace();
-            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "ID du Technicient invalide.");
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "ID du technicien invalide.");
         }
     }
 
@@ -111,47 +98,55 @@ public class TechnicienServlet extends HttpServlet {
         try {
             String idParam = request.getParameter("id");
             if (idParam == null || idParam.isEmpty()) {
-                response.sendError(HttpServletResponse.SC_BAD_REQUEST, "ID du Technicient manquant.");
+                response.sendError(HttpServletResponse.SC_BAD_REQUEST, "ID du technicien manquant.");
                 return;
             }
-
             int id = Integer.parseInt(idParam);
-            technicienDao.deleteTechnicient(id);
-
+            technicienDao.deleteTechnicien(id);
             response.sendRedirect(request.getContextPath() + "/TechnicienServlet");
         } catch (NumberFormatException e) {
             e.printStackTrace();
-            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "ID du Technicient invalide.");
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "ID du technicien invalide.");
         } catch (Exception e) {
             e.printStackTrace();
-            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Erreur lors de la suppression du Technicient.");
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Erreur lors de la suppression du technicien.");
         }
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        System.out.println("doPost appelé");
+        
         try {
+            // Récupération des données envoyées par le formulaire
             String nom = request.getParameter("nom");
-            String description = request.getParameter("description");
-            String prixParam = request.getParameter("prix");
+            String prenom = request.getParameter("prenom");
+            String email = request.getParameter("email");
+            String specialite = request.getParameter("specialite");
+            String experience = request.getParameter("experience");
+            String password = request.getParameter("password");
+            
 
-            if (nom == null || description == null || prixParam == null || nom.isEmpty() || description.isEmpty()) {
+
+            // Validation des champs obligatoires
+            if (nom == null || prenom == null || email == null || specialite == null || experience == null || password == null ||
+                nom.isEmpty() || prenom.isEmpty() || email.isEmpty() || specialite.isEmpty() || password.isEmpty()) {
                 response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Tous les champs sont obligatoires.");
                 return;
             }
 
-            double prix = Double.parseDouble(prixParam);
+            // Création de l'objet Technicien
+            Technicien technicien = new Technicien(0, nom, prenom, email, specialite, experience, password);
 
-            Service technicient = new Service(0, nom, description, prix);
-            technicienDao.createTechnicient(technicient);
+            // Ajout du technicien dans la base de données via le DAO
+            technicienDao.createTechnicien(technicien);
 
+            // Redirection vers la liste des techniciens après ajout
             response.sendRedirect(request.getContextPath() + "/TechnicienServlet");
-        } catch (NumberFormatException e) {
-            e.printStackTrace();
-            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Prix invalide.");
         } catch (Exception e) {
             e.printStackTrace();
-            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Erreur lors de la création du Technicient.");
+            // Gestion des erreurs générales
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Erreur lors de la création du technicien.");
         }
     }
 }
