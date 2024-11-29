@@ -1,6 +1,7 @@
 package servlets;
 
 import jakarta.servlet.ServletException;
+
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -12,7 +13,7 @@ import java.io.IOException;
 import beans.User;
 import dao.DAOAuth;
 import dao.DAOFactory;
-import dao.daoDomaine.DomaineDao;
+
 
 
 
@@ -55,14 +56,12 @@ protected void doPost(HttpServletRequest request, HttpServletResponse response) 
 
         // Rediriger en fonction du type d'utilisateur
         switch (user.getTypeUser()) {
-            case "habitant":
-                response.sendRedirect("Habitant/dashboard.jsp");
+            case "client":
+                response.sendRedirect("Client/dashboard.jsp");
                 break;
-            case "gerant":
-                response.sendRedirect("Gerant/dashboard.jsp");
-                break;
-            case "administrateur":
-                response.sendRedirect("Administrateur/dashboard.jsp");
+            
+            case "admin":
+                response.sendRedirect("Admin/dashboard.jsp");
                 break;
         }
     } else {

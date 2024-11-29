@@ -21,11 +21,9 @@ private DAOFactory daoFactory;
 	
 	public User authenticate(String username, String password) {
         String sql = 
-            "SELECT username, password, 'habitant' AS type_user FROM habitants WHERE username = ? AND password = ? " +
+            "SELECT username, password, 'client' AS type_user FROM clients WHERE username = ? AND password = ? " +
             "UNION " +
-            "SELECT username, password, 'gerant' AS type_user FROM gerants WHERE username = ? AND password = ? " +
-            "UNION " +
-            "SELECT username, password, 'administrateur' AS type_user FROM administrateurs WHERE username = ? AND password = ?";
+            "SELECT username, password, 'admin' AS type_user FROM admin WHERE username = ? AND password = ?";
         
         try (
         	Connection	conn = daoFactory.getConnection();

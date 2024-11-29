@@ -2,20 +2,20 @@ package dao;
 
 import java.io.IOException;
 
+
 import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
-import dao.daoDomaine.DomaineDao;
-import dao.daoDomaine.DomaineDaoImp;
-import dao.daoHabitant.HabitantDao;
-import dao.daoHabitant.HabitantDaoImp;
-import dao.daoProjet.ProjetDao;
-import dao.daoProjet.ProjetDaoImp;
-import dao.daoReclamation.ReclamationDao;
-import dao.daoReclamation.ReclamationDaoImp;
+import dao.daoClient.ClientDAO;
+import dao.daoClient.ClientDaoImpI;
+import dao.daoService.ServiceDAO;
+import dao.daoService.ServiceDaoImpI;
+import dao.daoTechnicien.TechnicienDAO;
+import dao.daoTechnicien.TechnicienDaoImpI;
+
 
 public class DAOFactory {
 
@@ -82,25 +82,25 @@ public class DAOFactory {
      * Méthodes de récupération de l'implémentation des différents DAO (un seul
      * pour le moment)
      */
-     public HabitantDao getHabitantDao() {
-    	 return new HabitantDaoImp(this);
-     }
-     public DomaineDao getDomaineDao() {
-    	 return new DomaineDaoImp(this);
-     }
-     public ProjetDao getProjetDao() {
-    	 return new ProjetDaoImp(this);
-     }
-     public ReclamationDao getReclamationDao() {
-    	 return new ReclamationDaoImp(this);
-     }
+     
      public DAOAuth getAuthDao() {
     	 return new DAOAuth(this);
      }
 
-     
 
-	
+	public ServiceDAO getServiceDao() {
+		
+		return new ServiceDaoImpI(this);
+	}
+	public ClientDAO getClientDAO() { 
+		
+		return new ClientDaoImpI(this); 
+	}
+	public TechnicienDAO getTechnicientDAO() { 
+		
+		return new TechnicienDaoImpI(this); 
+	}
+
      
      
 }
