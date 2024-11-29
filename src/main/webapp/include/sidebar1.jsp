@@ -1,0 +1,84 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
+<!-- Sidebar -->
+<ul class="navbar-nav sidebar sidebar-dark accordion" id="accordionSidebar" 
+    style="background-color: #FF5623;">
+
+    <!-- Sidebar - Brand -->
+    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.jsp">
+        <div class="sidebar-brand-icon rotate-n-15">
+            <i class="fas fa-laugh-wink" style="color: white;"></i>
+        </div>
+        <div class="sidebar-brand-text mx-3" style="color: white;">Client</div>
+    </a>
+
+    <!-- Divider -->
+    <hr class="sidebar-divider my-0" style="border-color: white;">
+
+    <!-- Nav Item - Dashboard -->
+    <li class="nav-item active">
+        <a class="nav-link" href="dashboard.jsp" style="color: white;">
+            <i class="fas fa-fw fa-tachometer-alt" style="color: white;"></i>
+            <span>Dashboard</span>
+        </a>
+    </li>
+
+    <!-- Divider -->
+    <hr class="sidebar-divider" style="border-color: white;">
+
+    <!-- Heading -->
+    <div class="sidebar-heading" style="color: white;">Interface</div>
+
+    <!-- Nav Item - Services -->
+    <li class="nav-item">
+        <a class="nav-link" href="services.jsp" style="color: white;">
+            <i class="fas fa-fw fa-concierge-bell" style="color: white;"></i>
+            <span>Services</span>
+        </a>
+    </li>
+
+    <!-- Nav Item - Demandes -->
+    <li class="nav-item">
+        <a class="nav-link" href="demandes.jsp" style="color: white;">
+            <i class="fas fa-fw fa-file-alt" style="color: white;"></i>
+            <span>Demandes</span>
+        </a>
+    </li>
+
+    <!-- Nav Item - Interventions -->
+    <li class="nav-item">
+        <a class="nav-link" href="interventions.jsp" style="color: white;">
+            <i class="fas fa-fw fa-tools" style="color: white;"></i>
+            <span>Interventions</span>
+        </a>
+    </li>
+
+    <!-- Divider -->
+    <hr class="sidebar-divider" style="border-color: white;">
+
+    <!-- Nav Item - Settings -->
+    <li class="nav-item">
+        <a class="nav-link" href="settings.jsp" style="color: white;">
+            <i class="fas fa-fw fa-cogs" style="color: white;"></i>
+            <span>Settings</span>
+        </a>
+    </li>
+
+    <!-- Nav Item - Logout -->
+    <li class="nav-item">
+        <a class="nav-link" href="logout.jsp" style="color: white;">
+            <i class="fas fa-fw fa-sign-out-alt" style="color: white;"></i>
+            <span>Logout</span>
+        </a>
+    </li>
+
+    <!-- Divider -->
+    <hr class="sidebar-divider d-none d-md-block" style="border-color: white;">
+
+    <!-- Sidebar Toggler (Sidebar) -->
+    <div class="text-center d-none d-md-inline">
+        <button class="rounded-circle border-0" id="sidebarToggle" style="background-color: white;"></button>
+    </div>
+
+</ul>
+<!-- End of Sidebar -->
