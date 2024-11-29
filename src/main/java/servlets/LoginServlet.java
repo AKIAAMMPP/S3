@@ -58,6 +58,7 @@ protected void doPost(HttpServletRequest request, HttpServletResponse response) 
         switch (user.getTypeUser()) {
             case "client":
                 response.sendRedirect("ClientJSP/dashboard-client.jsp");
+                System.out.print("hi");
                 break;
             
             case "admin":
