@@ -1,12 +1,14 @@
 package servlets;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.List;
 
 import beans.Client;
 import beans.Service;
 import dao.DAOFactory;
 import dao.daoClient.ClientDAO;
+import dao.daoService.ServiceDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -14,90 +16,116 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 @WebServlet("/ClientServlet")
-	public class ClientServlet extends HttpServlet {
-	    private static final long serialVersionUID = 1L;
-	    private ClientDAO clientDAO;
-	    
-	    public void init() throws ServletException {
-	        DAOFactory daoFactory = DAOFactory.getInstance();
-	        this.clientDAO = daoFactory.getClientDAO();
-	    }
+public class ClientServlet extends HttpServlet {
+    private static final long serialVersionUID = 1L;
+    private ClientDAO clientDAO;
+    private ServiceDAO serviceDAO;
 
-	    public ClientServlet() {
-	        super();
-	    }
-	    
-	    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	        String action = request.getParameter("action");
+    public void init() throws ServletException {
+        // Initialisation des DAO
+        DAOFactory daoFactory = DAOFactory.getInstance();
+        this.clientDAO = daoFactory.getClientDAO();
+        this.serviceDAO = daoFactory.getServiceDao();
+    }
 
-	        if (action == null) {
-	            list_Client(request, response); // Appeler la méthode qui liste les clients
-	        } else {
-	            switch (action) {
-		            case "ajouter":
-		            	showNewForm(request, response); // Afficher le formulaire de modification
-	                    break;
-	                case "modifier":
-	                    showEditForm(request, response); // Afficher le formulaire de modification
-	                    break;
-	                case "delete":
-	                    deleteClient(request, response); // Supprimer le client
-	                    break;
-	                default:
-	                    list_Client(request, response); // Afficher la liste des clients pour une action inconnue
-	                    break;
-	            }
-	        }
-	    }
+    public ClientServlet() {
+        super();
+    }
 
-	    protected void list_Client(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	        List<Client> clients = clientDAO.getAllClients(); // Récupérer la liste des clients
-	        request.setAttribute("clients", clients); // Ajouter la liste des clients à la requête
-	        request.getRequestDispatcher("/ClientJSP/clients.jsp").forward(request, response);
-	        System.out.println("hhhh");
-	    }
-	    private void showNewForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	        request.getRequestDispatcher("/ClientJSP/ClientAdd.jsp").forward(request, response);
-	    }
-	    protected void showEditForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	        int id = Integer.parseInt(request.getParameter("id"));
-	        Client client = clientDAO.getClientById(id); // Récupérer le client par son ID
-	        request.setAttribute("client", client); // Ajouter le client à la requête
-	        request.getRequestDispatcher("/ClientJSP/clientUpdate.jsp").forward(request, response); // Rediriger vers le formulaire de modification
-	    }
-	    
-	    protected void deleteClient(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	        int id = Integer.parseInt(request.getParameter("id"));
-	        clientDAO.deleteClient(id); // Supprimer le client
-	        response.sendRedirect(request.getContextPath() + "/ClientServlet"); // Rediriger vers la liste des clients
-	    }
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String action = request.getParameter("action");
 
-	    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	        try {
-	        	String nom = request.getParameter("nom");
-		        String prenom = request.getParameter("prenom");
-		        String email = request.getParameter("email");
-		        String password = request.getParameter("password");
-		        String adresse = request.getParameter("adresse");
-		        String telephone = request.getParameter("telephone");
+        if (action == null) {
+            list_Client(request, response); // Appeler la méthode qui liste les clients
+        } else {
+            switch (action) {
+                case "ajouter":
+                    showNewForm(request, response); // Afficher le formulaire d'ajout
+                    break;
+                case "modifier":
+                    showEditForm(request, response); // Afficher le formulaire de modification
+                    break;
+                case "delete":
+                    deleteClient(request, response); // Supprimer le client
+                    break;
+                default:
+                    list_Client(request, response); // Afficher la liste des clients pour une action inconnue
+                    break;
+            }
+        }
+    }
 
-	            if (nom == null || prenom == null || email == null || nom.isEmpty() || password.isEmpty()) {
-	                response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Tous les champs sont obligatoires.");
-	                return;
-	            }
+    protected void list_Client(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // Récupération des clients et des services
+        List<Client> clients = clientDAO.getAllClients();  
+        List<Service> services = null;
+		try {
+			services = serviceDAO.getAllServices();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        
+        // Variables supplémentaires à envoyer
+        String message = "Liste des clients et services chargée avec succès";
+        boolean isSuccess = true; // Indicateur de succès de l'opération
+        
+        // Ajouter les variables à la requête
+        request.setAttribute("clients", clients);
+        request.setAttribute("services", services);
+        request.setAttribute("message", message);  // Ajouter le message
+        request.setAttribute("isSuccess", isSuccess);  // Ajouter l'indicateur de succès
+        
+        // Redirection vers la page JSP
+        request.getRequestDispatcher("/ClientJSP/dashboard-client.jsp").forward(request, response);
+    }
 
-	            Client client = new Client(0, nom, prenom, email, password, adresse, telephone);
-	            clientDAO.createClient(client); 
-	            response.sendRedirect(request.getContextPath() + "/ClientServlet"); 
-	        } catch (NumberFormatException e) {
-	            e.printStackTrace();
-	            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Prix invalide.");
-	        } catch (Exception e) {
-	            e.printStackTrace();
-	            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Erreur lors de la création du service.");
-	        }
-	    }
-	    
-	}
+    private void showNewForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // Rediriger vers le formulaire d'ajout de client
+        request.getRequestDispatcher("/ClientJSP/ClientAdd.jsp").forward(request, response);
+    }
 
+    protected void showEditForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        int id = Integer.parseInt(request.getParameter("id"));
+        Client client = clientDAO.getClientById(id); // Récupérer le client par son ID
+        request.setAttribute("client", client); // Ajouter le client à la requête
+        request.getRequestDispatcher("/ClientJSP/clientUpdate.jsp").forward(request, response); // Rediriger vers le formulaire de modification
+    }
 
+    protected void deleteClient(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        int id = Integer.parseInt(request.getParameter("id"));
+        clientDAO.deleteClient(id); // Supprimer le client
+        response.sendRedirect(request.getContextPath() + "/ClientServlet"); // Rediriger vers la liste des clients
+    }
+
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        try {
+            String nom = request.getParameter("nom");
+            String prenom = request.getParameter("prenom");
+            String email = request.getParameter("email");
+            String password = request.getParameter("password");
+            String adresse = request.getParameter("adresse");
+            String telephone = request.getParameter("telephone");
+
+            // Validation des champs obligatoires
+            if (nom == null || prenom == null || email == null || nom.isEmpty() || password.isEmpty()) {
+                response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Tous les champs sont obligatoires.");
+                return;
+            }
+
+            // Création du client
+            Client client = new Client(0, nom, prenom, email, password, adresse, telephone);
+            clientDAO.createClient(client); 
+
+            // Redirection vers la liste des clients
+            response.sendRedirect(request.getContextPath() + "/ClientServlet"); 
+
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Prix invalide.");
+        } catch (Exception e) {
+            e.printStackTrace();
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Erreur lors de la création du client.");
+        }
+    }
+}

@@ -11,6 +11,8 @@ import java.util.Properties;
 
 import dao.daoClient.ClientDAO;
 import dao.daoClient.ClientDaoImpI;
+import dao.daoDemande.DemandeDAO;
+import dao.daoDemande.DemandeDaoImpI;
 import dao.daoService.ServiceDAO;
 import dao.daoService.ServiceDaoImpI;
 import dao.daoTechnicien.TechnicienDAO;
@@ -100,7 +102,11 @@ public class DAOFactory {
 		
 		return new TechnicienDaoImpI(this); 
 	}
+	public DemandeDAO getDemandeDAO() { 
+		
+		return new DemandeDaoImpI(this); 
+	}
 
-     
+	
      
 }

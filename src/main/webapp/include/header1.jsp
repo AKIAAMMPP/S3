@@ -15,7 +15,6 @@
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
                         <!-- Nav Item - Search Dropdown (Visible Only XS) -->
-                        
                         <!-- Nav Item - Alerts -->
                         <li class="nav-item dropdown no-arrow mx-1">
                             <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
@@ -31,7 +30,20 @@
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Admin</span>
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small"> <%
+									    Integer userId = (Integer) session.getAttribute("userId");
+									    if (userId != null) {
+									%>
+									        <p><strong><%= userId %></strong></p>
+									       
+									<%
+									    } else {
+									%>
+									        <p>Vous n'êtes pas connecté. <a href="login.jsp">Connexion</a></p>
+									<%
+									    }
+									%>
+									     </span>
                                 <img class="img-profile rounded-circle" src="${pageContext.request.contextPath}/template/img/profile1.PNG">
                             </a>
                         </li>

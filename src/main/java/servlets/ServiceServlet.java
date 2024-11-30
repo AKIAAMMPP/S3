@@ -70,13 +70,14 @@ public class ServiceServlet extends HttpServlet {
             request.setAttribute("services", services);
             
             // Redirection vers la page JSP
-            request.getRequestDispatcher("/ClientJSP/dashboard-client.jsp").forward(request, response);
+            request.getRequestDispatcher("/ServiceJSP/services.jsp").forward(request, response);
         } catch (Exception e) {
             // Gestion des erreurs : log et retour d'une erreur HTTP 500
             e.printStackTrace();
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Erreur lors de la récupération des services.");
         }
     }
+
 
     private void showNewForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.getRequestDispatcher("/ServiceJSP/serviceAdd.jsp").forward(request, response);

@@ -1,25 +1,39 @@
 package beans;
 
 public class User {
-	private String email;
+    private int id;
+    private String email;
     private String typeUser;
-
-    public User(String email, String typeUser) {
+    
+    // Constructeur modifié pour inclure l'ID
+    public User(int id, String email, String typeUser) {
+        this.id = id;
         this.email = email;
         this.typeUser = typeUser;
     }
-    public User() {
-    	
+    
+    // Getters et setters pour tous les attributs
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getEmail() {
         return email;
     }
 
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     public String getTypeUser() {
         return typeUser;
     }
 
-	
-
+    public void setTypeUser(String typeUser) {
+        this.typeUser = typeUser;
+    }
 }
