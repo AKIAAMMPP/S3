@@ -5,6 +5,8 @@ public class Technicien {
     private String nom;
     private String prenom;
     private String specialite;
+    private boolean disponibilite;
+    
     public String getSpecialite() {
 		return specialite;
 	}
@@ -19,17 +21,21 @@ public class Technicien {
     // Constructeur vide
     
     // Constructeur avec paramètres
-    public Technicien(int id, String nom, String prenom, String specialite,   String experience, String password, String email) {
+    public Technicien(int id, String nom, String prenom, String specialite,String experience, String password, String email,boolean disponibilite) {
         this.id = id;
         this.nom = nom;
         this.prenom = prenom;
         this.experience = experience;
         this.email = email;
         this.password = password ;
+        this.specialite=specialite;
+        this.disponibilite=disponibilite;
     }
     public Technicien() {
     }
 
+	
+	
 	public int getId() {
 		return id;
 	}
@@ -77,6 +83,11 @@ public class Technicien {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-
+	public boolean getDisponibilite() {
+		return disponibilite;
+	}
+	public void setDisponibilite(boolean disponibilite) {
+		this.disponibilite=disponibilite;
+	}
     
 }

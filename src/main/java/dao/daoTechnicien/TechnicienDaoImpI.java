@@ -67,11 +67,12 @@ public class TechnicienDaoImpI implements TechnicienDAO {
                 String nom = resultSet.getString("nom");
                 String prenom = resultSet.getString("prenom");
                 String specialite = resultSet.getString("specialite");
+                boolean disponibilite = resultSet.getBoolean("disponibilite");
                 String experience = resultSet.getString("experience");
                 String email = resultSet.getString("email");
                 String password = resultSet.getString("password");
 
-                techniciens.add(new Technicien(id, nom, prenom, specialite, experience, email, password));
+                techniciens.add(new Technicien(id, nom, prenom, specialite,experience, email, password,disponibilite));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -158,10 +159,11 @@ public class TechnicienDaoImpI implements TechnicienDAO {
                 		resultSet.getInt("id"),
                         resultSet.getString("nom"),
                         resultSet.getString("prenom"),
-                        resultSet.getString("experience"),
                         resultSet.getString("specialite"),
+                        resultSet.getString("experience"),                        
                         resultSet.getString("email"),
-                        resultSet.getString("password")
+                        resultSet.getString("password"),
+                        resultSet.getBoolean("disponibilite")
                 );
             }
         } catch (SQLException e) {
@@ -178,4 +180,19 @@ public class TechnicienDaoImpI implements TechnicienDAO {
 
         return technicien;
     }
+    public boolean updateDisponibilite(int id, boolean disponibilite) {
+    	String sql = "UPDATE techniciens SET disponibilite = ? WHERE id = ?"; 
+    	try (Connection connexion = daoFactory.getConnection();
+    			PreparedStatement preparedStatement = connexion.prepareStatement(sql)) {
+    		preparedStatement.setBoolean(1, disponibilite);
+    		preparedStatement.setInt(2, id);
+    		int rowsAffected = preparedStatement.executeUpdate();
+    		return rowsAffected > 0;
+    		} catch (SQLException e) { 
+    			e.printStackTrace();
+    			return false; } }
+
+	
+	
+
 }

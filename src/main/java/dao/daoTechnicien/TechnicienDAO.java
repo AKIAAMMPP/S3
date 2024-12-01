@@ -1,5 +1,6 @@
 package dao.daoTechnicien;
 
+import java.sql.SQLException;
 import java.util.List;
 import beans.Technicien;
 
@@ -10,4 +11,7 @@ public interface TechnicienDAO {
     List<Technicien> getAllTechniciens();
     void updateTechnicien(Technicien t);
     void deleteTechnicien(int id);
+    
+	boolean updateDisponibilite(int technicienId, boolean disponibilite);
+	
 }
