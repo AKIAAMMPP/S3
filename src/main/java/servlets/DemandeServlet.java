@@ -12,8 +12,11 @@ import java.util.List;
 
 import beans.Demande;
 import beans.Service;
+import beans.Technicien;
 import dao.DAOFactory;
 import dao.daoDemande.DemandeDAO;
+import dao.daoService.ServiceDAO;
+import dao.daoTechnicien.TechnicienDAO;
 
 /**
  * Servlet implementation class DemandeServlet
@@ -22,10 +25,17 @@ import dao.daoDemande.DemandeDAO;
 public class DemandeServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private DemandeDAO demandeDao;
+    private TechnicienDAO technicienDao;
+    private ServiceDAO serviceDao;
+
+
+        
 
     public void init() throws ServletException {
         DAOFactory daoFactory = DAOFactory.getInstance();
         this.demandeDao = daoFactory.getDemandeDAO();
+        this.technicienDao = daoFactory.getTechnicientDAO();
+        this.serviceDao = daoFactory.getServiceDao();
     }
 
     public DemandeServlet() {
@@ -38,7 +48,7 @@ public class DemandeServlet extends HttpServlet {
 
         try {
             if (action == null) {
-            	showNewForm(request, response);
+            	listDemande(request, response);
             } else {
                 switch (action) {
                     case "ajouter":
@@ -51,7 +61,7 @@ public class DemandeServlet extends HttpServlet {
                         deleteDemande(request, response);
                         break;
                     default:
-                    	showNewForm(request, response);
+                    	listDemande(request, response);
                         break;
                 }
             }
@@ -61,25 +71,28 @@ public class DemandeServlet extends HttpServlet {
         }
     }
 
-//    private void listDemande(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//        try {
-//            // Récupération des demandes depuis la base de données via le DAO
-//            List<Demande> demandes = demandeDao.getAllDemandes();
-//            
-//            // Vérification dans les logs pour le débogage
-//            System.out.println("Demandes récupérées : " + demandes);
-//            
-//            // Ajout de la liste des demandes dans les attributs de la requête
-//            request.setAttribute("demandes", demandes);
-//            
-//            // Redirection vers la page JSP
-//            request.getRequestDispatcher("/DemandeJSP/demandes.jsp").forward(request, response);
-//        } catch (Exception e) {
-//            // Gestion des erreurs : log et retour d'une erreur HTTP 500
-//            e.printStackTrace();
-//            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Erreur lors de la récupération des demandes.");
-//        }
-//    }
+    private void listDemande(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        try {
+        	List<Technicien> techniciens = technicienDao.getAllTechniciens();
+        	List<Demande> demandes = demandeDao.getAllDemandes();
+        	// Récupérer le nom du service pour chaque demande
+            for (Demande demande : demandes) {
+                Service service = serviceDao.getServiceById(demande.getServiceId());
+                if (service != null) {
+                    demande.setServiceName(service.getNom());  // Assigner le nom du service à l'objet Demande
+                }
+            }
+            String demandeId = request.getParameter("demandeId");
+            request.setAttribute("techniciens", techniciens);
+            request.setAttribute("demandeId", demandeId); 
+        	request.setAttribute("demandes", demandes); 
+        	request.getRequestDispatcher("/DemandeJSP/demandes.jsp").forward(request, response);
+            System.out.println("Demandes récupérées : " + demandes);
+        } catch (Exception e) {
+            e.printStackTrace();
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Erreur lors de la récupération des demandes.");
+        }
+    }
 
     private void showNewForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // Récupérer l'ID du service à partir de la requête

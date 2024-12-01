@@ -39,7 +39,7 @@
 
     <!-- Nav Item - Techniciens -->
     <li class="nav-item">
-        <a class="nav-link" href="ajout_technicien.jsp" style="color: white;">
+        <a class="nav-link" href="TechnicienServlet" style="color: white;">
             <i class="fas fa-fw fa-user-cog" style="color: white;"></i>
             <span>Techniciens</span>
         </a>

@@ -9,8 +9,6 @@
 <body>
     <h1>Ajouter Un Technicien</h1>
     
-
-
     <!-- Ajouter un bouton de test pour vérifier l'envoi POST -->
     <form action="TechnicienServlet" method="POST">
     	 <label for="nom">Nom :</label>

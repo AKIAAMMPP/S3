@@ -13,6 +13,8 @@ import dao.daoClient.ClientDAO;
 import dao.daoClient.ClientDaoImpI;
 import dao.daoDemande.DemandeDAO;
 import dao.daoDemande.DemandeDaoImpI;
+import dao.daoIntervention.InterventionDAO;
+import dao.daoIntervention.InterventionDaoImpI;
 import dao.daoService.ServiceDAO;
 import dao.daoService.ServiceDaoImpI;
 import dao.daoTechnicien.TechnicienDAO;
@@ -106,7 +108,11 @@ public class DAOFactory {
 		
 		return new DemandeDaoImpI(this); 
 	}
-
+	public InterventionDAO getInterventionDao() { 
+			
+		return new InterventionDaoImpI(this); 
+	}
+	
 	
      
 }

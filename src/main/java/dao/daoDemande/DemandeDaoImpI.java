@@ -51,7 +51,7 @@ public class DemandeDaoImpI implements DemandeDAO {
     @Override
     public List<Demande> getAllDemandes() {
         List<Demande> demandes = new ArrayList<>();
-        String sql = "SELECT * FROM demandes"; // Vérifiez que "demandes" est le bon nom de table
+        String sql = "SELECT * FROM demandes WHERE statut = 'en_cours' "; // Vérifiez que "demandes" est le bon nom de table
 
         try (Connection connection = daoFactory.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql);
@@ -74,6 +74,36 @@ public class DemandeDaoImpI implements DemandeDAO {
         System.out.println("Demandes trouvées : " + demandes.size()); // Log supplémentaire
         return demandes;
     }
+    
+    @Override
+    public void updateDemandeStatut(int demandeId, String newStatut) {
+        Connection connexion = null;
+        PreparedStatement preparedStatement = null;
+        try {
+            connexion = daoFactory.getConnection();
+            String sql = "UPDATE demandes SET statut = ? WHERE id = ?";
+            preparedStatement = connexion.prepareStatement(sql);
+            preparedStatement.setString(1, newStatut);
+            preparedStatement.setInt(2, demandeId);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            // Fermer les ressources
+            try {
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+                if (connexion != null) {
+                    connexion.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+
 
     @Override
     public void updateDemande(Demande demande) {

@@ -5,6 +5,7 @@ public class Service {
     private String nom;
     private String description;
     private double prix;
+    
 
     // Constructeur
     public Service(int id, String nom, String description, double prix) {

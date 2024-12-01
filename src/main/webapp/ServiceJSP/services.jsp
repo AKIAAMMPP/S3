@@ -31,7 +31,6 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <!-- Parcours de la liste des services -->
                     <c:forEach var="service" items="${services}">
                         <tr>
                             <td>${service.id}</td>

@@ -11,5 +11,6 @@ public interface DemandeDAO {
 	    void deleteDemande(int id);
 	    Demande getDemandeById(int id);
 	    void createDemande(Demande s);
+		void updateDemandeStatut(int demandeId, String newStatut);
 
 }

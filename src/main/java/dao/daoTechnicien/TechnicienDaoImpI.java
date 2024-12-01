@@ -71,7 +71,7 @@ public class TechnicienDaoImpI implements TechnicienDAO {
                 String email = resultSet.getString("email");
                 String password = resultSet.getString("password");
 
-                techniciens.add(new Technicien(id, nom, prenom, specialite, experience, email, password));
+                techniciens.add(new Technicien(id, nom, prenom, specialite, experience, email, password, false));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -137,6 +137,25 @@ public class TechnicienDaoImpI implements TechnicienDAO {
             }
         }
     }
+    public boolean updateDisponibilite(int id, boolean disponibilite) {
+        String sql = "UPDATE techniciens SET disponibilite = ? WHERE id = ?"; 
+        try (Connection connexion = daoFactory.getConnection();
+             PreparedStatement preparedStatement = connexion.prepareStatement(sql)) {
+            
+            // Définir les paramètres de la requête
+            preparedStatement.setBoolean(1, disponibilite);
+            preparedStatement.setInt(2, id);
+            
+            // Exécuter la mise à jour et vérifier le nombre de lignes affectées
+            int rowsAffected = preparedStatement.executeUpdate();
+            return rowsAffected > 0; // Retourne true si au moins une ligne est mise à jour
+            
+        } catch (SQLException e) { 
+            e.printStackTrace(); // Affiche la pile d'erreurs dans la console
+            return false; // Retourne false en cas d'échec
+        }
+    }
+
 
     @Override
     public Technicien getTechnicienById(int id) {

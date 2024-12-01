@@ -6,6 +6,7 @@ public class Demande {
     private int serviceId;
     private String demandeDescription;
     private String statut;
+    private String serviceName;
 
     // Constructeur
     public Demande(int id, int clientId, int serviceId, String demandeDescription, String statut) {
@@ -59,5 +60,13 @@ public class Demande {
 
     public void setStatut(String statut) {
         this.statut = statut;
+    }
+    
+    public String getServiceName() {
+        return serviceName;
+    }
+
+    public void setServiceName(String serviceName) {
+        this.serviceName = serviceName;
     }
 }

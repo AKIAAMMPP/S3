@@ -10,4 +10,5 @@ public interface TechnicienDAO {
     List<Technicien> getAllTechniciens();
     void updateTechnicien(Technicien t);
     void deleteTechnicien(int id);
+	boolean updateDisponibilite(int technicienId, boolean disponibilite);
 }
