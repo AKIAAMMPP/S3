@@ -45,7 +45,7 @@
 									%>
 									     </span>
                                 <img class="img-profile rounded-circle" src="${pageContext.request.contextPath}/template/img/profile1.PNG">
-                            </a>
+     						</a>
                         </li>
                     </ul>
                 </nav>

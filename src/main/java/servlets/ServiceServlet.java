@@ -70,7 +70,7 @@ public class ServiceServlet extends HttpServlet {
             request.setAttribute("services", services);
             
             // Redirection vers la page JSP
-            request.getRequestDispatcher("/ServiceJSP/services.jsp").forward(request, response);
+            request.getRequestDispatcher("/TechnicientJSP/technicient.jsp").forward(request, response);
         } catch (Exception e) {
             // Gestion des erreurs : log et retour d'une erreur HTTP 500
             e.printStackTrace();

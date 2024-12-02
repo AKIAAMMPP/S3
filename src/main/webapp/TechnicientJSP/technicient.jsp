@@ -44,38 +44,58 @@
 						        <div class="card-body">
 						            <!-- Section des cartes -->
 						            <div class="row">
-						                <!-- Carte 1 -->
-						                <div class="col-md-4">
-						                    <div class="card shadow mb-4">
-						                        <div class="card-header py-3">
-						                            <h6 class="m-0 font-weight-bold text-primary">Service 1</h6>
-						                        </div>
-						                        <div class="card-body">
-						                            <p><strong>Type:</strong> Plomberie</p>
-						                            <p><strong>Description:</strong> Réparation de fuite.</p>
-						                            <button class="btn btn-primary btn-sm">Voir Détails</button>
-						                        </div>
-						                    </div>
-						                </div>
-						                <!-- Carte 2 -->
-						                <div class="col-md-4">
-						                    <div class="card shadow mb-4">
-						                        <div class="card-header py-3">
-						                            <h6 class="m-0 font-weight-bold text-primary">Service 2</h6>
-						                        </div>
-						                        <div class="card-body">
-						                            <p><strong>Type:</strong> Électricité</p>
-						                            <p><strong>Description:</strong> Remplacement de disjoncteur.</p>
-						                            <button class="btn btn-primary btn-sm">Voir Détails</button>
-						                        </div>
-						                    </div>
-						                </div>
-						                <!-- Carte 3 -->
-						                
+						                <!-- Afficher les services -->
+						                <c:choose>
+										    <c:when test="${empty interventions}">
+										    </c:when>
+										    <c:otherwise>
+										        <h6 class="font-weight-bold text-secondary">Table des Interventions</h6>
+										        <table class="table table-bordered mt-3">
+										            <thead>
+										                <tr>
+										                    <th>ID Intervention</th>
+										                    <th>Demande ID</th>
+										                    <th>Technicien ID</th>
+										                    <th>Date Intervention</th>
+										                    <th>Statut</th>
+										                    <th>Rapport</th>
+										                    <th>Note</th>
+										                    <th>Commentaire</th>
+										                    <th>Actions</th>
+										                </tr>
+										            </thead>
+										            <tbody>
+										                <c:forEach var="intervention" items="${interventions}">
+										                    <tr>
+										                        <td>${intervention.id}</td>
+										                        <td>${intervention.demandeId}</td>
+										                        <td>${intervention.technicienId}</td>
+										                        <td>${intervention.dateIntervention}</td>
+										                        <td>${intervention.statut}</td>
+										                        <td>${intervention.rapport}</td>
+										                        <td>${intervention.note}</td>
+										                        <td>${intervention.commentaire}</td>
+										                        <td>
+										                            <form action="InterventionServlet" method="get" style="display:inline;">
+										                                <input type="hidden" name="interventionId" value="${intervention.id}" />
+										                                <button type="submit" name="action" value="delete" class="btn btn-danger btn-sm">Supprimer</button>
+										                            </form>
+										                            <form action="TechnicienServlet" method="get" style="display:inline;">
+										                                <input type="hidden" name="interventionId" value="${intervention.id}" />
+										                                <button type="submit" name="action" value="affecter" class="btn btn-primary btn-sm">Affecter</button>
+										                            </form>
+										                        </td>
+										                    </tr>
+										                </c:forEach>
+										            </tbody>
+										        </table>
+										    </c:otherwise>
+										</c:choose>
 						            </div>
 						        </div>
 						    </div>
 						</div>
+						
                         <!-- Pie Chart -->
                         <div class="col-xl-4 col-lg-5">
                             <div class="card shadow mb-4">

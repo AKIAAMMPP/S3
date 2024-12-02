@@ -75,6 +75,7 @@ public class DemandeServlet extends HttpServlet {
         try {
         	List<Technicien> techniciens = technicienDao.getAllTechniciens();
         	List<Demande> demandes = demandeDao.getAllDemandes();
+        	List<Service> services = serviceDao.getAllServices();
         	// Récupérer le nom du service pour chaque demande
             for (Demande demande : demandes) {
                 Service service = serviceDao.getServiceById(demande.getServiceId());
@@ -82,7 +83,9 @@ public class DemandeServlet extends HttpServlet {
                     demande.setServiceName(service.getNom());  // Assigner le nom du service à l'objet Demande
                 }
             }
+            
             String demandeId = request.getParameter("demandeId");
+            request.setAttribute("services", services);
             request.setAttribute("techniciens", techniciens);
             request.setAttribute("demandeId", demandeId); 
         	request.setAttribute("demandes", demandes); 

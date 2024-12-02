@@ -5,9 +5,11 @@ import java.sql.SQLException;
 import java.util.List;
 
 import beans.Client;
+import beans.Intervention;
 import beans.Service;
 import dao.DAOFactory;
 import dao.daoClient.ClientDAO;
+import dao.daoIntervention.InterventionDAO;
 import dao.daoService.ServiceDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -20,12 +22,15 @@ public class ClientServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private ClientDAO clientDAO;
     private ServiceDAO serviceDAO;
+    private InterventionDAO interventionDAO;
+	
 
     public void init() throws ServletException {
         // Initialisation des DAO
         DAOFactory daoFactory = DAOFactory.getInstance();
         this.clientDAO = daoFactory.getClientDAO();
         this.serviceDAO = daoFactory.getServiceDao();
+        this.interventionDAO = daoFactory.getInterventionDao();
     }
 
     public ClientServlet() {
@@ -36,28 +41,30 @@ public class ClientServlet extends HttpServlet {
         String action = request.getParameter("action");
 
         if (action == null) {
-            list_Client(request, response); // Appeler la méthode qui liste les clients
+            list_Client(request, response);
         } else {
             switch (action) {
                 case "ajouter":
-                    showNewForm(request, response); // Afficher le formulaire d'ajout
+                    showNewForm(request, response);
                     break;
                 case "modifier":
-                    showEditForm(request, response); // Afficher le formulaire de modification
+                    showEditForm(request, response);
                     break;
                 case "delete":
-                    deleteClient(request, response); // Supprimer le client
+                    deleteClient(request, response);
                     break;
                 default:
-                    list_Client(request, response); // Afficher la liste des clients pour une action inconnue
+                    list_Client(request, response);
                     break;
             }
         }
     }
 
     protected void list_Client(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // Récupération des clients et des services
-        List<Client> clients = clientDAO.getAllClients();  
+        
+        List<Client> clients = clientDAO.getAllClients(); 
+        List<Intervention> interventions = interventionDAO.getAllIntervention();
+    	
         List<Service> services = null;
 		try {
 			services = serviceDAO.getAllServices();
@@ -70,7 +77,7 @@ public class ClientServlet extends HttpServlet {
         String message = "Liste des clients et services chargée avec succès";
         boolean isSuccess = true; // Indicateur de succès de l'opération
         
-        // Ajouter les variables à la requête
+        request.setAttribute("interventions", interventions); 
         request.setAttribute("clients", clients);
         request.setAttribute("services", services);
         request.setAttribute("message", message);  // Ajouter le message

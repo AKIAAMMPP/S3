@@ -51,7 +51,7 @@ public class DemandeDaoImpI implements DemandeDAO {
     @Override
     public List<Demande> getAllDemandes() {
         List<Demande> demandes = new ArrayList<>();
-        String sql = "SELECT * FROM demandes WHERE statut = 'en_cours' "; // Vérifiez que "demandes" est le bon nom de table
+        String sql = "SELECT * FROM demandes WHERE statut = 'en_attente' "; // Vérifiez que "demandes" est le bon nom de table
 
         try (Connection connection = daoFactory.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql);

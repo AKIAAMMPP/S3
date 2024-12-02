@@ -52,7 +52,7 @@ public class InterventionDaoImpI implements InterventionDAO {
         }
     }
     @Override
-	public List<Intervention> getAllIntervention() throws SQLException {
+	public List<Intervention> getAllIntervention() {
     	 List<Intervention> interventions = new ArrayList<>();
          String sql = "SELECT * FROM interventions";
 

@@ -102,9 +102,11 @@ public class InterventionServlet extends HttpServlet {
                 return;
             }
             
+            // Créer une nouvelle intervention
             Intervention intervention = new Intervention(0, Integer.parseInt(demandeId), Integer.parseInt(technicienId),
             		"hooo", "en_cours", rapport, note, commentaire);
 
+            // Ajouter l'intervention dans la base de données
             interventionDao.createIntervention(intervention);
             demandeDao.updateDemandeStatut(Integer.parseInt(demandeId), "terminee");
             response.sendRedirect(request.getContextPath() + "/DemandeServlet");
