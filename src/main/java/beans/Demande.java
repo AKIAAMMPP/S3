@@ -5,15 +5,19 @@ public class Demande {
     private int clientId;
     private int serviceId;
     private String demandeDescription;
+    private String adresse;
+    private String telephone;
     private String statut;
     private String serviceName;
 
     // Constructeur
-    public Demande(int id, int clientId, int serviceId, String demandeDescription, String statut) {
+    public Demande(int id, int clientId, int serviceId, String demandeDescription,String adresse,String telephone, String statut) {
         this.id = id;
         this.clientId = clientId;
         this.serviceId = serviceId;
         this.demandeDescription = demandeDescription;
+        this.adresse = adresse;
+        this.telephone = telephone;
         this.statut = statut;
     }
 
@@ -69,4 +73,21 @@ public class Demande {
     public void setServiceName(String serviceName) {
         this.serviceName = serviceName;
     }
+
+	public String getAdresse() {
+		return adresse;
+	}
+
+	public void setAdresse(String adresse) {
+		this.adresse = adresse;
+	}
+
+	public String getTelephone() {
+		return telephone;
+	}
+
+	public void setTelephone(String telephone) {
+		this.telephone = telephone;
+	}
+    
 }

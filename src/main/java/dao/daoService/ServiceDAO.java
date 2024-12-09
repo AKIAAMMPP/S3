@@ -10,6 +10,7 @@ public interface ServiceDAO {
     void deleteService(int id);
     Service getServiceById(int id);
     void createService(Service s);
+	List<Service> getServicesByName(String searchQuery) throws Exception;
 }
 
 		 

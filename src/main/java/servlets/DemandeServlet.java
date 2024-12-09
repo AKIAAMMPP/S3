@@ -9,12 +9,14 @@ import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 import beans.Demande;
 import beans.Service;
 import beans.Technicien;
 import dao.DAOFactory;
 import dao.daoDemande.DemandeDAO;
+import dao.daoIntervention.InterventionDAO;
 import dao.daoService.ServiceDAO;
 import dao.daoTechnicien.TechnicienDAO;
 
@@ -27,6 +29,7 @@ public class DemandeServlet extends HttpServlet {
     private DemandeDAO demandeDao;
     private TechnicienDAO technicienDao;
     private ServiceDAO serviceDao;
+    private InterventionDAO interventionDao;
 
 
         
@@ -36,6 +39,7 @@ public class DemandeServlet extends HttpServlet {
         this.demandeDao = daoFactory.getDemandeDAO();
         this.technicienDao = daoFactory.getTechnicientDAO();
         this.serviceDao = daoFactory.getServiceDao();
+        this.interventionDao = daoFactory.getInterventionDao();
     }
 
     public DemandeServlet() {
@@ -70,33 +74,6 @@ public class DemandeServlet extends HttpServlet {
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Une erreur s'est produite : " + e.getMessage());
         }
     }
-
-    private void listDemande(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        try {
-        	List<Technicien> techniciens = technicienDao.getAllTechniciens();
-        	List<Demande> demandes = demandeDao.getAllDemandes();
-        	List<Service> services = serviceDao.getAllServices();
-        	// Récupérer le nom du service pour chaque demande
-            for (Demande demande : demandes) {
-                Service service = serviceDao.getServiceById(demande.getServiceId());
-                if (service != null) {
-                    demande.setServiceName(service.getNom());  // Assigner le nom du service à l'objet Demande
-                }
-            }
-            
-            String demandeId = request.getParameter("demandeId");
-            request.setAttribute("services", services);
-            request.setAttribute("techniciens", techniciens);
-            request.setAttribute("demandeId", demandeId); 
-        	request.setAttribute("demandes", demandes); 
-        	request.getRequestDispatcher("/DemandeJSP/demandes.jsp").forward(request, response);
-            System.out.println("Demandes récupérées : " + demandes);
-        } catch (Exception e) {
-            e.printStackTrace();
-            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Erreur lors de la récupération des demandes.");
-        }
-    }
-
     private void showNewForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // Récupérer l'ID du service à partir de la requête
         String serviceId = request.getParameter("serviceId");
@@ -109,6 +86,43 @@ public class DemandeServlet extends HttpServlet {
     }
 
 
+
+    private void listDemande(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        try {
+        	List<Technicien> techniciens = technicienDao.getAllTechniciens_disponible();
+        	List<Demande> demandes = demandeDao.getAllDemandes();
+        	 System.out.println("admin demandes " + demandes);
+        	List<Service> services = serviceDao.getAllServices();
+        	// Récupérer le nom du service pour chaque demande
+            for (Demande demande : demandes) {
+                Service service = serviceDao.getServiceById(demande.getServiceId());
+                if (service != null) {
+                    demande.setServiceName(service.getNom());  // Assigner le nom du service à l'objet Demande
+                }
+            }
+            Map<String, Integer> demandeStats = demandeDao.getDemandeStats();
+            int interventionsEnCours = interventionDao.getInterventionsEnCoursCount();
+
+            // Ajouter les statistiques au contexte de la requête
+            request.setAttribute("totalDemandes", demandeStats.get("totalDemandes"));
+            request.setAttribute("demandesEnAttente", demandeStats.get("demandesEnAttente"));
+            request.setAttribute("demandesTerminees", demandeStats.get("demandesTerminees"));
+            request.setAttribute("interventionsEnCours", interventionsEnCours);
+            
+            String demandeId = request.getParameter("demandeId");
+            request.setAttribute("services", services);
+            request.setAttribute("techniciens_s", techniciens);
+            request.setAttribute("demandeId", demandeId); 
+        	request.setAttribute("demandes", demandes); 
+        	request.getRequestDispatcher("/DemandeJSP/demandes.jsp").forward(request, response);
+            System.out.println("Demandes récupérées : " + demandes);
+        } catch (Exception e) {
+            e.printStackTrace();
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Erreur lors de la récupération des demandes.");
+        }
+    }
+
+    
 
     private void showEditForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
@@ -162,6 +176,9 @@ public class DemandeServlet extends HttpServlet {
             String serviceIdParam = request.getParameter("serviceId");
             String description = request.getParameter("description");
             String statut = request.getParameter("statut");
+            String adresse = request.getParameter("adresse");
+            String telephone = request.getParameter("telephone");
+            
 
             // Afficher les valeurs des paramètres pour le débogage
             System.out.println("Paramètre serviceId : " + serviceIdParam);
@@ -191,13 +208,13 @@ public class DemandeServlet extends HttpServlet {
             System.out.println("Conversion réussie : serviceId = " + serviceId);
 
             // Créer une nouvelle instance de Demande
-            Demande demande = new Demande(0, userId, serviceId, description, statut);
+            Demande demande = new Demande(0, userId, serviceId, description, adresse, telephone, statut);
             System.out.println("Demande créée : " + demande);
             
             demandeDao.createDemande(demande);
 
             // Rediriger vers une page de succès ou la liste des demandes
-            response.sendRedirect(request.getContextPath() + "/DemandeServlet?success=created");
+            response.sendRedirect(request.getContextPath() + "/ClientServlet?success=created");
         } catch (NumberFormatException e) {
             e.printStackTrace();
             System.out.println("Erreur de conversion : " + e.getMessage());

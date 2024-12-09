@@ -9,9 +9,15 @@ public class Technicien {
     private String experience;
     private String email;
     private String password;
+    private String service;
+    
+    public Technicien(int id, String nom, String prenom, String email, String specialite, String adresse, String experience, boolean disponibilite) {
+        // Initialisation des champs
+    }
+
 
     // Constructeur avec paramètres
-    public Technicien(int id, String nom, String prenom, String specialite, String experience, String password, String email, boolean disponibilite) {
+    public Technicien(int id, String nom, String prenom, String specialite, String experience, String password, String email, boolean disponibilite, String service) {
         this.id = id;
         this.nom = nom;
         this.prenom = prenom;
@@ -20,6 +26,7 @@ public class Technicien {
         this.email = email;
         this.password = password;
         this.disponibilite = disponibilite;
+        this.service = service;
     }
 
     // Constructeur vide
@@ -90,4 +97,15 @@ public class Technicien {
     public void setDisponibilite(boolean disponibilite) {
         this.disponibilite = disponibilite;
     }
+
+	public String getService() {
+		return service;
+	}
+
+	public void setService(String service) {
+		this.service = service;
+	}
+    
+    
+    
 }

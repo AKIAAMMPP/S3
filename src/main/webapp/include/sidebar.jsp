@@ -9,7 +9,7 @@
         <div class="sidebar-brand-icon rotate-n-15">
             <i class="fas fa-laugh-wink" style="color: white;"></i>
         </div>
-        <div class="sidebar-brand-text mx-3" style="color: white;">SB Admin 2</div>
+        <div class="sidebar-brand-text mx-3" style="color: white;">Admin</div>
     </a>
 
     <!-- Divider -->
@@ -31,7 +31,7 @@
 
     <!-- Nav Item - Services -->
     <li class="nav-item">
-        <a class="nav-link" href="ajout_service.jsp" style="color: white;">
+        <a class="nav-link" href="${pageContext.request.contextPath}/ServiceServlet?action=list_service_admin" style="color: white;">
             <i class="fas fa-fw fa-concierge-bell" style="color: white;"></i>
             <span>Services</span>
         </a>
@@ -39,7 +39,7 @@
 
     <!-- Nav Item - Techniciens -->
     <li class="nav-item">
-        <a class="nav-link" href="TechnicienServlet" style="color: white;">
+        <a class="nav-link" href="${pageContext.request.contextPath}/TechnicienServlet?action=list_technicien_admin" style="color: white;">
             <i class="fas fa-fw fa-user-cog" style="color: white;"></i>
             <span>Techniciens</span>
         </a>
@@ -47,7 +47,7 @@
 
     <!-- Nav Item - Demandes -->
     <li class="nav-item">
-        <a class="nav-link" href="demandes.jsp" style="color: white;">
+        <a class="nav-link" href="${pageContext.request.contextPath}/DemandeServlet" style="color: white;">
             <i class="fas fa-fw fa-file-alt" style="color: white;"></i>
             <span>Demandes</span>
         </a>
@@ -55,7 +55,7 @@
 
     <!-- Nav Item - Interventions -->
     <li class="nav-item">
-        <a class="nav-link" href="interventions.jsp" style="color: white;">
+        <a class="nav-link" href="${pageContext.request.contextPath}/InterventionServlet?action=list_intervention_admin" style="color: white;">
             <i class="fas fa-fw fa-tools" style="color: white;"></i>
             <span>Interventions</span>
         </a>
@@ -64,17 +64,10 @@
     <!-- Divider -->
     <hr class="sidebar-divider" style="border-color: white;">
 
-    <!-- Nav Item - Settings -->
-    <li class="nav-item">
-        <a class="nav-link" href="settings.jsp" style="color: white;">
-            <i class="fas fa-fw fa-cogs" style="color: white;"></i>
-            <span>Settings</span>
-        </a>
-    </li>
-
+   
     <!-- Nav Item - Logout -->
     <li class="nav-item">
-        <a class="nav-link" href="logout.jsp" style="color: white;">
+        <a class="nav-link" href="${pageContext.request.contextPath}/LogoutServlet?action=logout" style="color: white;">
             <i class="fas fa-fw fa-sign-out-alt" style="color: white;"></i>
             <span>Logout</span>
         </a>

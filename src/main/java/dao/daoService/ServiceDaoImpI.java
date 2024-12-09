@@ -168,6 +168,31 @@ public class ServiceDaoImpI implements ServiceDAO  {
 
         return service;
     }
+    public List<Service> getServicesByName(String searchQuery) throws Exception {
+        List<Service> services = new ArrayList<>();
+        String sql = "SELECT * FROM services WHERE nom LIKE ?";
+
+        try (Connection connection = daoFactory.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            // Ajouter des caractères joker pour la recherche SQL
+            statement.setString(1, "%" + searchQuery + "%");
+
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    Service service = new Service();
+                    service.setId(resultSet.getInt("id"));
+                    service.setNom(resultSet.getString("nom"));
+                    service.setDescription(resultSet.getString("description"));
+                    service.setPrix(resultSet.getDouble("prix"));
+
+                    services.add(service);
+                }
+            }
+        }
+        return services;
+    }
+
 }
 
 

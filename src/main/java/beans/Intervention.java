@@ -9,6 +9,8 @@ public class Intervention {
     private String rapport;
     private String note;
     private String commentaire;
+    private String serviceName;
+    private String technicienName;
 
     // Constructeur
     public Intervention(int id, int demandeId, int technicienId, String dateIntervention, String statut, String rapport, String note, String commentaire) {
@@ -93,4 +95,24 @@ public class Intervention {
     public void setCommentaire(String commentaire) {
         this.commentaire = commentaire;
     }
+
+	public String getServiceName() {
+		return serviceName;
+	}
+
+	public void setServiceName(String serviceName) {
+		this.serviceName = serviceName;
+	}
+
+	public String getTechnicienName() {
+		return technicienName;
+	}
+
+	public void setTechnicienName(String technicienName) {
+		this.technicienName = technicienName;
+	}
+
+	 
+    
+    
 }
