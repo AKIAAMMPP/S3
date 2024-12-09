@@ -70,7 +70,7 @@
                    											    <th>Nom du Technicien</th>
 											                    <th>Date Intervention</th>
 											                    <th>Statut</th>
-											                    <th>Actions</th>
+											                    <th>Noter et Commenter</th>
 											                </tr>
 											            </thead>
 											            <tbody>

@@ -141,7 +141,6 @@ public class ClientServlet extends HttpServlet {
         Integer clientId = (Integer) session.getAttribute("userId"); // L'ID du client stocké dans la session
         System.out.println("clientId: " + clientId);
 
-        // Redirection vers la page de login si le client n'est pas connecté
         if (clientId == null) {
             response.sendRedirect("login.jsp");
             return;
@@ -157,7 +156,6 @@ public class ClientServlet extends HttpServlet {
         request.setAttribute("demandesEnAttente", demandeStats.get("demandesEnAttente"));
         request.setAttribute("demandesTerminees", demandeStats.get("demandesTerminees"));
         request.setAttribute("interventionsEnCours", interventionsEnCours);
-        // Ajouter les données au contexte de la requête pour affichage dans la JSP
         request.setAttribute("demandes", demandesClient);
         request.setAttribute("message", "Liste des demandes chargée avec succès");
         request.setAttribute("isSuccess", true); // Indicateur de succès de l'opération
@@ -173,6 +171,7 @@ public class ClientServlet extends HttpServlet {
             return;
         }
         
+        
         List<Intervention> interventionsClient = interventionDAO.getInterventionsByClientId(clientId);
         request.setAttribute("interventions", interventionsClient);
         request.setAttribute("message", "Liste des interventions et services chargée avec succès");
@@ -182,62 +181,6 @@ public class ClientServlet extends HttpServlet {
     }
 
 
-//    protected void list_intervention_client(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//        HttpSession session = request.getSession();
-//        Integer clientId = (Integer) session.getAttribute("userId"); // Assurez-vous que l'ID du client est stocké dans la session
-//        System.out.println("clientId: " + clientId);
-//        
-//        if (clientId == null) {
-//            response.sendRedirect("login.jsp");
-//            return;
-//        }
-//        List<Demande> demandes = demandeDAO.getDemandesByClientId(clientId); 
-//        System.out.println("Demandes pour clientId " + clientId + " : " + demandes);
-//        
-//        List<Intervention> interventionsClient = new ArrayList<>();
-//        for (Demande demande : demandes) {
-//        	
-//            List<Intervention> interventionsPourDemande = interventionDAO.getInterventionsByDemandeId(demande.getId());
-//            Service service = serviceDAO.getServiceById(demande.getServiceId());
-//            // Ajouter une information supplémentaire pour chaque intervention
-//            for (Intervention intervention : interventionsPourDemande) {
-//                // Récupérer le nom du technicien associé à l'intervention
-//            	System.out.println("Technicien id: " + intervention.getTechnicienId());
-//                Technicien technicien = technicienDAO.getTechnicienById(intervention.getTechnicienId());
-//                if (technicien != null) {
-//                    System.out.println("Technicien namr: " + technicien.getNom());
-//                } else {
-//                    System.out.println("Technicien introuvable pour l'ID : " + intervention.getTechnicienId());
-//                }
-//
-//                
-//                // Ajouter ces informations à l'intervention pour affichage dans la JSP
-//                intervention.setServiceName(service != null ? service.getNom() : "Service non trouvé");
-//                intervention.setTechnicienName(technicien != null ? technicien.getNom() : "Technicien non trouvé");
-//            }
-//            
-//            interventionsClient.addAll(interventionsPourDemande);
-//        }
-//        
-//        System.out.println("interv pour clientId " + interventionsClient);
-//        Map<String, Integer> demandeStats = demandeDAO.getDemandeStats();
-//        int interventionsEnCours = interventionDAO.getInterventionsEnCoursCount();
-//
-//        // Ajouter les statistiques au contexte de la requête
-//        request.setAttribute("totalDemandes", demandeStats.get("totalDemandes"));
-//        request.setAttribute("demandesEnAttente", demandeStats.get("demandesEnAttente"));
-//        request.setAttribute("demandesTerminees", demandeStats.get("demandesTerminees"));
-//        request.setAttribute("interventionsEnCours", interventionsEnCours);
-//        // Ajouter les données au contexte de la requête
-//        request.setAttribute("interventions", interventionsClient); 
-//        request.setAttribute("message", "Liste des interventions et services chargée avec succès");
-//        request.setAttribute("isSuccess", true); // Indicateur de succès de l'opération
-//
-//        // Redirection vers la page JSP
-//        request.getRequestDispatcher("/ClientJSP/dashboard-client.jsp").forward(request, response);
-//    }
-//    
-    
     protected void updateIntervention(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // Logique de mise à jour de la note et du commentaire d'une intervention
         try {

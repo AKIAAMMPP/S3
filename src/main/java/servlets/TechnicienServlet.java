@@ -359,7 +359,7 @@ public class TechnicienServlet extends HttpServlet {
             try {
                 technicienDao.createTechnicien(technicien);
                 System.out.println("Technicien ajouté avec succès : " + technicien);
-                response.sendRedirect(request.getContextPath() + "/DemandeServlet");
+                response.sendRedirect(request.getContextPath() + "/TechnicienServlet?action=list_technicien_admin");
             } catch (Exception e) {
                 e.printStackTrace();
                 response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Erreur lors de l'ajout du technicien.");
@@ -402,12 +402,7 @@ public class TechnicienServlet extends HttpServlet {
             // Configurer la réponse HTTP
             response.setContentType("text/plain; charset=UTF-8");
 
-            if (isUpdated) {
-                response.setStatus(HttpServletResponse.SC_OK);
-                response.getWriter().write("Disponibilité mise à jour avec succès.");
-            } else {
-                response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Erreur lors de la mise à jour de la disponibilité. L'ID peut ne pas exister.");
-            }
+            response.sendRedirect(request.getContextPath() + "/TechnicienServlet");
         } catch (Exception e) {
             e.printStackTrace();
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Erreur serveur : " + e.getMessage());

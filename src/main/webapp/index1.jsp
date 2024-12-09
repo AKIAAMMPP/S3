@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>Creative - Start Bootstrap Theme</title>
+        <title></title>
         <!-- Favicon-->
         <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
         <!-- Bootstrap Icons-->
@@ -22,13 +22,12 @@
         <!-- Navigation-->
         <nav class="navbar navbar-expand-lg navbar-light fixed-top py-3" id="mainNav">
             <div class="container px-4 px-lg-5">
-                <a class="navbar-brand" href="#page-top">Start Bootstrap</a>
+                <a class="navbar-brand" href="#page-top"></a>
                 <button class="navbar-toggler navbar-toggler-right" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ms-auto my-2 my-lg-0">
                         <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
                         <li class="nav-item"><a class="nav-link" href="#services">Services</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#portfolio">Portfolio</a></li>
                         <li class="nav-item"><a class="nav-link" href="#contact">Se connecter</a></li>
                     </ul>
                 </div>
@@ -39,11 +38,11 @@
             <div class="container px-4 px-lg-5 h-100">
                 <div class="row gx-4 gx-lg-5 h-100 align-items-center justify-content-center text-center">
                     <div class="col-lg-8 align-self-end">
-                        <h1 class="text-white font-weight-bold">Your Favorite Place for Free Bootstrap Themes</h1>
+                        <h1 class="text-white font-weight-bold">La meilleure plateforme pour gérer les demandes de services de maintenance à domicile.</h1>
                         <hr class="divider" />
                     </div>
                     <div class="col-lg-8 align-self-baseline">
-                        <p class="text-white-75 mb-5">Start Bootstrap can help you build better websites using the Bootstrap framework! Just download a theme and start customizing, no strings attached!</p>
+                        <p class="text-white-75 mb-5">Notre plateforme vous aide à créer une expérience fluide pour la gestion des services de maintenance à domicile ! Personnalisez facilement vos demandes et suivez leur progression, sans aucun engagement !</p>
                         <a class="btn btn-primary btn-xl" href="#about">Find Out More</a>
                     </div>
                 </div>
@@ -70,7 +69,7 @@
                 <div class="row g-0">
                     <div class="col-lg-4 col-sm-6">
                         <a class="portfolio-box" href="${pageContext.request.contextPath}/template1/assets/img/portfolio/fullsize/1.jpg" title="Project Name">
-                            <img class="img-fluid" src="${pageContext.request.contextPath}/template1/assets/img/portfolio/thumbnails/1.jpg" alt="..." />
+                            <img class="img-fluid" src="${pageContext.request.contextPath}/template1/assets/img/portfolio/thumbnails/11.jpg" alt="..." />
                             <div class="portfolio-box-caption">
                                 <div class="project-category text-white-50">Category</div>
                                 <div class="project-name">Project Name</div>
@@ -79,7 +78,7 @@
                     </div>
                     <div class="col-lg-4 col-sm-6">
                         <a class="portfolio-box" href="${pageContext.request.contextPath}/template1/assets/img/portfolio/fullsize/2.jpg" title="Project Name">
-                            <img class="img-fluid" src="${pageContext.request.contextPath}/template1/assets/img/portfolio/thumbnails/2.jpg" alt="..." />
+                            <img class="img-fluid" src="${pageContext.request.contextPath}/template1/assets/img/portfolio/thumbnails/22.jpg" alt="..." />
                             <div class="portfolio-box-caption">
                                 <div class="project-category text-white-50">Category</div>
                                 <div class="project-name">Project Name</div>
@@ -88,7 +87,7 @@
                     </div>
                     <div class="col-lg-4 col-sm-6">
                         <a class="portfolio-box" href="${pageContext.request.contextPath}/template1/assets/img/portfolio/fullsize/3.jpg" title="Project Name">
-                            <img class="img-fluid" src="${pageContext.request.contextPath}/template1/assets/img/portfolio/thumbnails/3.jpg" alt="..." />
+                            <img class="img-fluid" src="${pageContext.request.contextPath}/template1/assets/img/portfolio/thumbnails/33.jpg" alt="..." />
                             <div class="portfolio-box-caption">
                                 <div class="project-category text-white-50">Category</div>
                                 <div class="project-name">Project Name</div>
@@ -97,7 +96,7 @@
                     </div>
                     <div class="col-lg-4 col-sm-6">
                         <a class="portfolio-box" href="${pageContext.request.contextPath}/template1/assets/img/portfolio/fullsize/4.jpg" title="Project Name">
-                            <img class="img-fluid" src="${pageContext.request.contextPath}/template1/assets/img/portfolio/thumbnails/4.jpg" alt="..." />
+                            <img class="img-fluid" src="${pageContext.request.contextPath}/template1/assets/img/portfolio/thumbnails/44.jpg" alt="..." />
                             <div class="portfolio-box-caption">
                                 <div class="project-category text-white-50">Category</div>
                                 <div class="project-name">Project Name</div>
@@ -106,7 +105,7 @@
                     </div>
                     <div class="col-lg-4 col-sm-6">
                         <a class="portfolio-box" href="${pageContext.request.contextPath}/template1/assets/img/portfolio/fullsize/5.jpg" title="Project Name">
-                            <img class="img-fluid" src="${pageContext.request.contextPath}/template1/assets/img/portfolio/thumbnails/5.jpg" alt="..." />
+                            <img class="img-fluid" src="${pageContext.request.contextPath}/template1/assets/img/portfolio/thumbnails/55.jpg" alt="..." />
                             <div class="portfolio-box-caption">
                                 <div class="project-category text-white-50">Category</div>
                                 <div class="project-name">Project Name</div>
@@ -115,7 +114,7 @@
                     </div>
                     <div class="col-lg-4 col-sm-6">
                         <a class="portfolio-box" href="${pageContext.request.contextPath}/template1/assets/img/portfolio/fullsize/6.jpg" title="Project Name">
-                            <img class="img-fluid" src="${pageContext.request.contextPath}/template1/assets/img/portfolio/thumbnails/6.jpg" alt="..." />
+                            <img class="img-fluid" src="${pageContext.request.contextPath}/template1/assets/img/portfolio/thumbnails/66.jpg" alt="..." />
                             <div class="portfolio-box-caption p-3">
                                 <div class="project-category text-white-50">Category</div>
                                 <div class="project-name">Project Name</div>
@@ -184,7 +183,7 @@
                 <div class="row gx-4 gx-lg-5 justify-content-center">
                     <div class="col-lg-4 text-center mb-5 mb-lg-0">
                         <i class="bi-phone fs-2 mb-3 text-muted"></i>
-                        <div>+1 (555) 123-4567</div>
+                        <div></div>
                     </div>
                 </div>
             </div>

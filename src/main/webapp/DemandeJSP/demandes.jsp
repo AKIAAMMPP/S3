@@ -29,7 +29,7 @@
 								        <tr>
 								       		<th>Service</th>
 								            <th>Description</th>
-								            <th>Actions</th>
+								            <th>Affecter la demande</th>
 								        </tr>
 								    </thead>
 								    <tbody>
@@ -132,7 +132,6 @@
 						                <tr>
 						                    <th>Nom</th>
 						                    <th>Prénom</th>
-						                    <th>Email</th>
 						                    <th>Expérience</th>
 						                    <th>Service</th>
 						                    <th>Actions</th>
@@ -143,7 +142,6 @@
 						                    <tr>
 						                        <td>${technicien.nom}</td>
 						                        <td>${technicien.prenom}</td>
-						                        <td>${technicien.email}</td>
 						                        <td>${technicien.experience} ans</td>
 						                        <td>${technicien.service}</td>
 						                        <td>
@@ -180,7 +178,6 @@
 						                <tr>
 						                    <th>Service</th>
 						                    <th>Description</th>
-						                    <th>Prix</th>
 						                    <th>Actions</th>
 						                </tr>
 						            </thead>
@@ -189,7 +186,6 @@
 						                    <tr>
 						                        <td>${service.nom}</td>
 						                        <td>${service.description}</td>
-						                        <td>${service.prix}</td>
 						                        <td>
 						                            <form action="ServiceServlet" method="get" style="display:inline;">
 													    <input type="hidden" name="action" value="modifier">

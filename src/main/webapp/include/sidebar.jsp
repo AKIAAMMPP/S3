@@ -67,7 +67,7 @@
    
     <!-- Nav Item - Logout -->
     <li class="nav-item">
-        <a class="nav-link" href="${pageContext.request.contextPath}/LogoutServlet?action=logout" style="color: white;">
+        <a class="nav-link" href="${pageContext.request.contextPath}/index1.jsp" style="color: white;">
             <i class="fas fa-fw fa-sign-out-alt" style="color: white;"></i>
             <span>Logout</span>
         </a>

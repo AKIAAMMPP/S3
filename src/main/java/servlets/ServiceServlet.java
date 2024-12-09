@@ -216,7 +216,7 @@ public class ServiceServlet extends HttpServlet {
             serviceDao.updateService(service);
 
             // Rediriger vers la liste des services
-            response.sendRedirect(request.getContextPath() + "/DemandeServlet");
+            response.sendRedirect(request.getContextPath() + "/ServiceServlet?action=list_service_admin");
         } catch (Exception e) {
             e.printStackTrace();
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Erreur lors de la mise à jour du service.");
@@ -249,7 +249,7 @@ public class ServiceServlet extends HttpServlet {
                 Service service = new Service(0, nom, description, prix);
                 serviceDao.createService(service);
 
-                response.sendRedirect(request.getContextPath() + "/DemandeServlet");
+                response.sendRedirect(request.getContextPath() + "/ServiceServlet?action=list_service_admin");
             }
         } catch (NumberFormatException e) {
             e.printStackTrace();
